@@ -1,0 +1,14 @@
+{{/* table template */ -}}
+
+{{$w := sub termWidth 100 -}}
+{{ $small := 10 -}}
+{{ $med   := 18 -}}
+
++{{ "-" | rep $small }}+{{ "-" | rep $w }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+
+| {{ "Issue" | printf "%-8s" }} | {{ "Summary" | printf (printf "%%-%ds" (sub $w 2)) }} | {{ "Priority" | printf "%-12s" }} | {{ "Status" | printf "%-16s" }} | {{ "Last Updated" | printf "%-10s" }} | {{ "Assignee" | printf "%-16s" }} |
++{{ "-" | rep $small }}+{{ "-" | rep $w }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+
+
+{{ range .issues -}}
+  | {{ .key | printf "%-8s"}} | {{ .fields.summary | abbrev (sub $w 2) | printf (printf "%%-%ds" (sub $w 2)) }} | {{if .fields.priority}}{{.fields.priority.name | printf "%-12s" }}{{else}}<unassigned>{{end}} | {{.fields.status.name | printf "%-16s" }} | {{.fields.updated | age | printf "%-12s" }} | {{if .fields.assignee }}{{.fields.assignee.name | printf "%-16s" }}{{else}}<unassigned>{{end}} |
+{{ end -}}
++{{ "-" | rep $small }}+{{ "-" | rep $w }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+

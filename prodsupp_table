@@ -1,0 +1,14 @@
+{{$w := sub termWidth 100 -}}
+{{ $small := 10 -}}
+{{ $med   := 20 -}}
+
++{{ "-" | rep $med }}+{{ "-" | rep $w }}+{{ "-" | rep 14 }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+
+| {{ "Issue" | printf "%-16s" }} | {{ "Summary" | printf (printf "%%-%ds" (sub $w 2)) }} | {{ "Priority" | printf "%-12s" }} | {{ "Last Updated" | printf "%-10s" }} | {{ "Reporter" | printf "%-20s" }} |
++{{ "-" | rep $med }}+{{ "-" | rep $w }}+{{ "-" | rep 14 }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+
+
+{{ range .issues -}}
+  | {{ .key | printf "%-16s"}} | {{ .fields.summary | abbrev (sub $w 2) | printf (printf "%%-%ds" (sub $w 2)) }} | {{if .fields.priority}}{{.fields.priority.name | printf "%-12s" }}{{else}}<unassigned>{{end}} | {{.fields.updated | age | printf "%-12s" }} | {{if .fields.reporter}}{{.fields.reporter.name | printf "%-20s" }}{{else}}<unassigned>{{end}} |
+{{ end -}}
++{{ "-" | rep $med }}+{{ "-" | rep $w }}+{{ "-" | rep 14 }}+{{ "-" | rep 14 }}+{{ "-" | rep $med }}+
+
+https://jira.sermo.com/projects/PRODSUPP/queues/custom/14
