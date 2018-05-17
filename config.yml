@@ -1,0 +1,47 @@
+endpoint: https://jira.sermo.com
+user: bryce.mcdonnell
+
+custom-commands:
+  - name: bi-all
+    help: list all tickets assigned to bi
+    script: |-
+      jira list --project=BI
+
+  - name: bi
+    help: list all tickets in open sprints for BI
+    script: |-
+      jira list \
+      --project=BI \
+      --template sprint_table \
+      --query "sprint in openSprints() AND type != epic AND resolution = unresolved AND project=BI ORDER BY status DESC"
+
+  - name: bi-pm
+    help: list tickets in open sprints for BI for PM review
+    script: |-
+      jira list \
+      --project=BI \
+      --template sprint_table \
+      --query "sprint in openSprints() AND type != epic AND resolution = unresolved AND project=BI AND status = 'In PM Review'"
+
+  - name: bi-history
+    help: list all tickets in BI history
+    script: |-
+      jira list \
+      --project=BI \
+      --template beta_in_sprint \
+      --query "sprint NOT IN openSprints() AND type != epic AND project=BI AND status IN (Closed, Done) AND updatedDate > startOfYear()"
+
+  - name: beta
+    help: list all tickets in open sprints for beta
+    script: |-
+      jira list \
+      --project=CLI \
+      --template sprint_table \
+      --query "sprint in openSprints() AND type != epic AND resolution = unresolved AND status NOT IN (Closed, 'To Do', 'Backlog') AND project=CLI ORDER BY status, priority"
+
+  - name: prodsupp
+    help: list all tickets assigned to bi
+    script: |-
+      jira list \
+      --template prodsupp_table \
+      --query "resolution = unresolved AND status = 'Waiting For Triage' AND project=PRODSUPP ORDER BY created ASC"
